@@ -38,12 +38,13 @@ public class PatientInfoFileRepository implements PatientInfoRepository {
     @Override
     public String add(PatientInfo patientInfo) {
         PatientInfo info = new PatientInfo(UUID.randomUUID().toString(),
-            patientInfo.getName(),
-            patientInfo.getSurname(),
-            patientInfo.getBirthday(),
-            patientInfo.getHealthInfo());
+                patientInfo.getName(),
+                patientInfo.getSurname(),
+                patientInfo.getBirthday(),
+                patientInfo.getHealthInfo());
 
-        try (Scanner scanner = new Scanner(repoFile); FileWriter writer = new FileWriter(repoFile, true)) {
+        try (Scanner scanner = new Scanner(repoFile);
+             FileWriter writer = new FileWriter(repoFile, true)) {
             while (scanner.hasNextLine()) {
                 PatientInfo existsValue = mapper.readValue(scanner.nextLine(), PatientInfo.class);
                 if (isPatientExist(patientInfo, existsValue)) {
@@ -60,9 +61,9 @@ public class PatientInfoFileRepository implements PatientInfoRepository {
 
     private static boolean isPatientExist(PatientInfo patientInfo, PatientInfo existsValue) {
         return existsValue.getBirthday().equals(patientInfo.getBirthday())
-            && existsValue.getHealthInfo().equals(patientInfo.getHealthInfo())
-            && existsValue.getName().equals(patientInfo.getName())
-            && existsValue.getSurname().equals(patientInfo.getSurname());
+                && existsValue.getHealthInfo().equals(patientInfo.getHealthInfo())
+                && existsValue.getName().equals(patientInfo.getName())
+                && existsValue.getSurname().equals(patientInfo.getSurname());
     }
 
     @Override
